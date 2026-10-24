@@ -71,7 +71,7 @@ const { listen, setTimeout, clearTimeout, requestAnimationFrame, cancelAnimation
   listen(figure, 'blur', reset);
   listen(figure, 'click', event => {
     if (event.detail === 0 || touch.matches) {
-      locked = !active; keyboard = false; center(); reveal(locked, true);
+      locked = !locked; keyboard = false; center(); reveal(locked, true);
     }
   });
   listen(figure, 'keydown', event => { if (event.key === 'Escape') { reset(); event.preventDefault(); } });

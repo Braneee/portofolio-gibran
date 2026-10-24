@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-const links = [['about', 'Tentang'], ['missions', 'Misi'], ['arsenal', 'Keahlian'], ['contact', 'Kontak']];
+const links = [['about', 'Tentang'], ['missions', 'Proyek'], ['arsenal', 'Keahlian'], ['contact', 'Kontak']];
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState('');
@@ -18,9 +18,9 @@ export default function Header() {
     document.querySelectorAll('main section[id]').forEach(section => observer.observe(section));
     return () => observer.disconnect();
   }, []);
-  return <header className="site-header"><div className="nav-shell">
-    <a className="brand" href="#home" aria-label="Gibran Rais — beranda"><img src={import.meta.env.BASE_URL + "assets/emblem.svg"} width="33" height="37" alt="" /><span>GIBRAN<span className="brand-dot">.</span><small>THE GALACTIC ARCHIVE</small></span></a>
+  return <header className="site-header"><div className="reading-progress" aria-hidden="true" /><div className="nav-shell">
+    <a className="brand" href="#home" aria-label="Gibran Rais - beranda"><span className="brand-monogram" aria-hidden="true">g<span>.</span></span><span>Gibran Iskandar<small>Software & mobile developer</small></span></a>
     <nav id="navigation" className={open ? 'open' : ''} aria-label="Navigasi utama">{links.map(([id, label], index) => <a key={id} href={'#' + id} className={active === id ? 'active' : ''} aria-current={active === id ? 'location' : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span> {label}</a>)}</nav>
-    <div className="nav-actions"><button ref={toggle} className="menu-toggle" aria-expanded={open} aria-controls="navigation" aria-label={open ? 'Tutup menu' : 'Buka menu'} onClick={() => setOpen(!open)}><span /><span /></button></div>
+    <div className="nav-actions"><a className="header-contact" href="#contact">Let’s talk <span>↗</span></a><button ref={toggle} className="menu-toggle" aria-expanded={open} aria-controls="navigation" aria-label={open ? 'Tutup menu' : 'Buka menu'} onClick={() => setOpen(!open)}><span /><span /></button></div>
   </div></header>;
 }

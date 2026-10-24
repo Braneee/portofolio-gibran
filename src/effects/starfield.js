@@ -41,7 +41,7 @@ function drawStars(time) {
       ctx.lineWidth = star.radius;
       ctx.beginPath(); ctx.moveTo(x + dx * stretch * 0.3, y + dy * stretch * 0.3); ctx.lineTo(x + dx * stretch, y + dy * stretch); ctx.stroke();
     } else {
-      ctx.fillStyle = '#c3d1c7';
+      ctx.fillStyle = '#c9c3b9';
       ctx.beginPath(); ctx.arc(x, y, star.radius, 0, Math.PI * 2); ctx.fill();
     }
   });

@@ -57,7 +57,7 @@ const { listen, setTimeout, clearTimeout, requestAnimationFrame, cancelAnimation
     const card = document.createElement('div');
     card.className = 'force-hologram';
     const id = document.createElement('span'); id.className = 'holo-id';
-    id.textContent = 'HOLO TRANSMISSION // ' + String(++sequence).padStart(3, '0');
+    id.textContent = 'TRANSMISSION / ' + String(++sequence).padStart(3, '0');
     const text = document.createElement('strong'); text.textContent = phrases[(sequence - 1) % phrases.length];
     const grip = document.createElement('span'); grip.className = 'holo-grip'; grip.textContent = '⠿ HOLD TO FORCE PULL';
     card.append(id, text, grip); holograms.append(card); cards.set(card, {});

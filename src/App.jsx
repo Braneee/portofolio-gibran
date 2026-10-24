@@ -7,7 +7,6 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import DisciplineStrip from './components/DisciplineStrip';
 import ProjectDialog from './components/ProjectDialog';
 import { projects } from './data/projects';
 import { useFeedback } from './hooks/useFeedback';
@@ -21,7 +20,7 @@ export default function App() {
   return <>
     <a className="skip-link" href="#main">Langsung ke konten</a>
     <canvas id="starfield" aria-hidden="true" /><div className="noise" aria-hidden="true" /><Icons /><Header />
-    <main id="main"><Hero /><DisciplineStrip /><About />
+    <main id="main"><Hero /><About />
       <Projects category={category} onFilter={value => { setCategory(value); playTone(450); }} onProject={(id, button) => { trigger.current = button; setProjectId(id); playTone(620); }} />
       <Skills /><Contact />
     </main><Footer />

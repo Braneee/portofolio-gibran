@@ -1,6 +1,6 @@
 export const projects = {
   warungku: {
-    title: 'WarungKu', label: 'MISSION 001 / MOBILE APPLICATION',
+    title: 'WarungKu', label: '01 / MOBILE APPLICATION',
     description: 'Aplikasi point of sale berbasis Flutter untuk warung kelontong dan warung makan. README proyek mendeskripsikan pengelolaan produk, transaksi, inventori, dan laporan dengan backend Supabase.',
     tags: ['Flutter', 'Dart', 'Provider', 'Supabase', 'PostgreSQL'],
     features: ['Fokus: menyederhanakan aktivitas kasir dan pengelolaan stok warung.', 'README mencantumkan role Admin dan Guest, pengelolaan produk, serta alur transaksi.', 'Fondasi teknologi: Flutter, Provider, dan layanan Auth, Database, serta Storage dari Supabase.'],
@@ -8,7 +8,7 @@ export const projects = {
     url: 'https://github.com/Braneee/final-capstone-project'
   },
   stpi: {
-    title: 'STPI Mobile', label: 'MISSION 002 / MOBILE APPLICATION',
+    title: 'STPI Mobile', label: '02 / MOBILE APPLICATION',
     description: 'Repository aplikasi Flutter milik Gibran. Struktur proyek memuat target Android, iOS, web, dan desktop serta direktori aset.',
     tags: ['Flutter', 'Dart'],
     features: ['Pengembangan mobile dengan Flutter dan bahasa Dart.', 'Kode aplikasi tersedia pada direktori lib di repository publik.', 'README saat ini masih singkat; rincian tujuan, fitur, dan kontribusi dapat dilengkapi oleh pemilik proyek.'],
@@ -16,7 +16,7 @@ export const projects = {
     url: 'https://github.com/Braneee/stpi-mobile'
   },
   poliklinik: {
-    title: 'Poliklinik App', label: 'MISSION 003 / WEB APPLICATION',
+    title: 'Poliklinik App', label: '03 / WEB APPLICATION',
     description: 'Repository aplikasi web poliklinik dengan struktur Laravel. Profil GitHub menampilkan Blade sebagai bahasa utamanya.',
     tags: ['Laravel', 'PHP', 'Blade'],
     features: ['Fondasi aplikasi web menggunakan Laravel dan template Blade.', 'Repository mencakup direktori app, database, resources, dan routes.', 'Detail fitur dan peran dalam proyek dapat dilengkapi setelah dikonfirmasi oleh pemilik.'],
