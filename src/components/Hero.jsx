@@ -5,7 +5,7 @@ export default function Hero() {
     <div className="hero-editorial">
       <p className="hero-eyebrow mono"><span className="status-dot" /> SOFTWARE ENGINEERING & MOBILE DEVELOPMENT</p>
       <h1 id="hero-title"><span className="line-mask"><span>Gibran Rais</span></span><span className="line-mask"><span>Iskandar<span className="accent">.</span></span></span></h1>
-      <p className="hero-intro">Saya membangun aplikasi mobile dan web.<br />Dari struktur di balik layar sampai detail yang kamu sentuh.</p>
+      <p className="hero-intro">Saya membangun aplikasi mobile dan web, dari struktur di balik layar sampai detail yang kamu sentuh.</p>
       <div className="hero-links"><a className="button primary" href="#missions">Lihat karya saya <svg><use href="#i-arrow" /></svg></a><a className="text-link" href="https://github.com/Braneee" target="_blank" rel="noopener noreferrer">GitHub <svg><use href="#i-arrow" /></svg></a></div>
 
     </div>

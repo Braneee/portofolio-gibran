@@ -24,10 +24,12 @@ export default function App() {
       <Projects category={category} onFilter={value => { setCategory(value); playTone(450); }} onProject={(id, button) => { trigger.current = button; setProjectId(id); playTone(620); }} />
       <Skills /><Contact />
     </main><Footer />
+    <div className="experience-controls container" role="group" aria-label="Pengaturan efek tambahan">
     <button className="sound-toggle" id="sound-toggle" aria-pressed={sound} aria-label={sound ? 'Nonaktifkan suara efek' : 'Aktifkan suara efek'} onClick={toggleSound}><svg><use href="#i-sound" /></svg><span>{sound ? 'SOUND ON' : 'SOUND OFF'}</span></button>
     <div className={'toast mono' + (message ? ' show' : '')} role="status" aria-live="polite">{message}</div>
     <div className="force-layer" id="force-layer" aria-hidden="true"><div className="force-reticle" id="force-reticle"><span /><i /></div><svg className="force-tethers" id="force-tethers" /><div id="force-holograms" /></div>
     <div className="force-controls"><span className="force-help" id="force-help" /><button id="force-toggle" className="force-toggle" aria-pressed="true" aria-label="Nonaktifkan efek cursor Force"><span aria-hidden="true">✧</span><span id="force-toggle-label">FORCE ON</span></button></div>
+    </div>
     <ProjectDialog project={projects[projectId]} onClose={() => setProjectId(null)} trigger={trigger} />
   </>;
 }
