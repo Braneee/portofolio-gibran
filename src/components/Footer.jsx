@@ -1,0 +1,3 @@
+export default function Footer() { return (<>
+<footer className="container"><a className="footer-brand" href="#home">GIBRAN<span>.</span></a><p className="mono">MAY THE CODE BE WITH YOU.</p><a className="back-top mono" href="#home">BACK TO TOP ↑</a><div className="footer-bottom mono"><span>© <span>{new Date().getFullYear()}</span> GIBRAN RAIS HILMY ISKANDAR</span><span>PERSONAL PORTFOLIO · STAR WARS FAN TRIBUTE · <a href="https://pngimg.com/image/28330" target="_blank" rel="noopener noreferrer">Vader: PNGimg</a> · <a href="https://pngimg.com/license" target="_blank" rel="noopener noreferrer">CC BY-NC 4.0</a></span></div></footer>
+</>); }

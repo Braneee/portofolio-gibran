@@ -1,6 +1,7 @@
-'use strict';
-
-(() => {
+import { createScope } from './scope';
+export function initVaderReveal({ announce, playTone } = {}) {
+const scope = createScope();
+const { listen, setTimeout, clearTimeout, requestAnimationFrame, cancelAnimationFrame } = scope;
   const figure = document.getElementById('vader-figure');
   const portrait = document.getElementById('vader-portrait');
   const hint = document.getElementById('vader-hint');
@@ -52,7 +53,7 @@
     locked = false; keyboard = false;
     reveal(false);
   }
-  figure.addEventListener('pointermove', event => {
+  listen(figure, 'pointermove', event => {
     if (event.pointerType === 'touch' || locked) return;
     keyboard = false;
     const bounds = portrait.getBoundingClientRect();
@@ -63,29 +64,31 @@
     targetY = Math.max(0, Math.min(bounds.height, py));
     reveal(nearHelmet);
   }, { passive: true });
-  figure.addEventListener('pointerleave', () => { if (!locked && !keyboard) reveal(false); });
-  figure.addEventListener('focus', () => {
+  listen(figure, 'pointerleave', () => { if (!locked && !keyboard) reveal(false); });
+  listen(figure, 'focus', () => {
     if (figure.matches(':focus-visible')) { keyboard = true; center(); reveal(true, true); }
   });
-  figure.addEventListener('blur', reset);
-  figure.addEventListener('click', event => {
+  listen(figure, 'blur', reset);
+  listen(figure, 'click', event => {
     if (event.detail === 0 || touch.matches) {
       locked = !active; keyboard = false; center(); reveal(locked, true);
     }
   });
-  figure.addEventListener('keydown', event => { if (event.key === 'Escape') { reset(); event.preventDefault(); } });
-  document.addEventListener('pointerdown', event => { if (locked && !figure.contains(event.target)) reset(); }, { passive: true });
-  window.addEventListener('scroll', reset, { passive: true });
-  window.addEventListener('resize', () => { reset(); center(); }, { passive: true });
-  window.addEventListener('blur', reset);
-  document.addEventListener('visibilitychange', () => {
+  listen(figure, 'keydown', event => { if (event.key === 'Escape') { reset(); event.preventDefault(); } });
+  listen(document, 'pointerdown', event => { if (locked && !figure.contains(event.target)) reset(); }, { passive: true });
+  listen(window, 'scroll', reset, { passive: true });
+  listen(window, 'resize', () => { reset(); center(); }, { passive: true });
+  listen(window, 'blur', reset);
+  listen(document, 'visibilitychange', () => {
     if (document.hidden) { cancelAnimationFrame(frame); frame = 0; active = false; locked = false; keyboard = false; radius = 0; targetRadius = 0; opacity = 0; write(); figure.setAttribute('aria-pressed', 'false'); figure.classList.remove('is-revealing'); hint.textContent = idleHint(); }
   });
-  reduced.addEventListener('change', () => { reset(); render(); });
-  touch.addEventListener('change', () => { reset(); hint.textContent = idleHint(); });
-  document.getElementById('gibran-portrait').addEventListener('error', event => {
+  listen(reduced, 'change', () => { reset(); render(); });
+  listen(touch, 'change', () => { reset(); hint.textContent = idleHint(); });
+  listen(document.getElementById('gibran-portrait'), 'error', event => {
     const image = event.currentTarget;
     if (!image.src.endsWith('gibran-portrait-placeholder.svg')) image.src = 'assets/gibran-portrait-placeholder.svg';
   });
   center(); write();
-})();
+
+return () => { scope.dispose(); figure.classList.remove("is-revealing"); };
+}

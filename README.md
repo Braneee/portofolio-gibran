@@ -1,53 +1,60 @@
 # Gibran — Portfolio
 
-Portfolio personal Gibran Rais Hilmy Iskandar, Software Engineer & Mobile Developer, dengan tema Star Wars Dark Side. HTML, CSS, dan JavaScript tanpa framework atau dependency runtime.
+Portfolio personal Gibran Rais Hilmy Iskandar, Software Engineer & Mobile Developer, dengan tema Star Wars Dark Side. Dibangun ulang menggunakan React + Vite dengan komponen JSX, state React, dan efek browser yang dikelola melalui hooks.
 
 ## Menjalankan lokal
 
-Gunakan Node.js 20 atau lebih baru:
+Gunakan Node.js 22.12+ (atau 20.19+):
 
 ```sh
+npm ci
 npm run dev
 ```
 
-Buka http://127.0.0.1:4173. Untuk memeriksa sintaks JavaScript:
+Buka URL lokal yang ditampilkan Vite (biasanya http://127.0.0.1:5173). Untuk memeriksa dan membangun versi produksi:
 
 ```sh
-npm run check
+npm run build
 ```
 
 ## Hosting di Vercel
 
 1. Import repository `Braneee/portofolio-gibran` di Vercel.
-2. Gunakan root directory repository dan Framework Preset **Other**.
-3. `vercel.json` sudah mengatur Build Command `npm run check` dan Output Directory `dist`.
+2. Gunakan root directory repository dan Framework Preset **Vite**.
+3. `vercel.json` sudah mengatur Build Command `npm run build` dan Output Directory `dist`.
 4. Deploy. Tidak membutuhkan environment variable atau backend.
 
 ## Struktur project
 
 ```text
-dist/
-  index.html                 # Konten profil dan section
-  styles.css                 # Layout dan komponen dasar
-  vader-hero.css              # Hero dan palet Dark Side
-  app.js                     # Navigasi, proyek, audio, dan starfield
-  vader-hero.js               # Reveal portrait di helm
-  force-cursor.css
-  force-cursor.js             # Efek cursor dan hologram
-  assets/                    # Aset yang digunakan website
-server.mjs                   # Server preview lokal
-package.json                 # Perintah dev dan check
-vercel.json                  # Konfigurasi deploy statis
-ASSET-CREDITS.md              # Sumber dan lisensi aset
+src/
+  App.jsx                    # State filter proyek, dialog, dan komposisi halaman
+  main.jsx                   # Entry React dengan StrictMode
+  components/                # Header, Hero, About, Projects, Skills, Contact, Footer
+  data/projects.js           # Data detail proyek
+  hooks/                     # Feedback audio dan lifecycle efek
+  effects/                   # Canvas, Force cursor, dan reveal portrait
+  styles/                    # CSS responsif dan tema Dark Side
+public/assets/               # Aset statis
+index.html                   # HTML entry dan metadata
+vite.config.js               # Konfigurasi React + Vite
+package.json
+package-lock.json            # Versi dependency yang terkunci
+vercel.json                  # Deploy Vite ke Vercel
+ASSET-CREDITS.md
 ```
 
 ## Mengedit
 
-- Konten, tautan sosial, serta daftar teknologi: `dist/index.html`.
-- Detail proyek: objek `projects` di `dist/app.js`.
-- Foto masih placeholder. Tambahkan foto ke `dist/assets/`, ubah `src` pada `#gibran-portrait`, lalu hapus label `.portrait-caption` setelah foto asli terpasang. Sesuaikan `.vader-portrait` di `dist/vader-hero.css` jika perlu.
+- Konten, tautan sosial, serta daftar teknologi: komponen di `src/components/`.
+- Detail proyek: `src/data/projects.js`.
+- Foto masih placeholder. Tambahkan foto ke `public/assets/`, ubah `src` pada `#gibran-portrait`, lalu hapus label `.portrait-caption` setelah foto asli terpasang. Sesuaikan `.vader-portrait` di `src/styles/vader-hero.css` jika perlu.
 - Google Fonts digunakan dengan fallback font sistem. Suara sintetis bersifat opsional. Preferensi efek disimpan di browser.
 
 Ringkasan proyek bersumber dari repository publik pemilik; ilustrasi kartu bukan screenshot aplikasi asli. Tidak ada klaim metrik, sertifikasi, atau pengalaman yang dibuat-buat.
 
 Star Wars merupakan inspirasi fan tribute. Lihat [kredit aset](ASSET-CREDITS.md) untuk sumber dan ketentuan penggunaan gambar.
+
+## Preview hasil build
+
+Jalankan `npm run build`, lalu `npm run preview`. Folder `dist/` dihasilkan otomatis oleh Vite dan tidak disimpan ke Git.

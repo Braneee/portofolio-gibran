@@ -2,7 +2,7 @@
 
 ## Darth Vader
 
-- Local file: `dist/assets/darth-vader-front.png`.
+- Local file: `public/assets/darth-vader-front.png`.
 - Source page: https://pngimg.com/image/28330
 - Image URL: https://pngimg.com/uploads/darth_vader/darth_vader_PNG1.png
 - Source labels the asset Attribution-NonCommercial 4.0 International (CC BY-NC 4.0): https://pngimg.com/license

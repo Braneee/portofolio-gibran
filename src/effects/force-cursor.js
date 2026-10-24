@@ -1,6 +1,7 @@
-'use strict';
-
-(() => {
+import { createScope } from './scope';
+export function initForceCursor({ announce, playTone } = {}) {
+const scope = createScope();
+const { listen, setTimeout, clearTimeout, requestAnimationFrame, cancelAnimationFrame } = scope;
   const layer = document.getElementById('force-layer');
   const reticle = document.getElementById('force-reticle');
   const holograms = document.getElementById('force-holograms');
@@ -106,14 +107,14 @@
     if (coarse.matches) help.textContent = 'Ketuk area kosong. Tarik teks hologramnya.';
     else { help.replaceChildren(document.createTextNode('Klik & tarik area kosong. Pegang hologramnya. ')); const key = document.createElement('kbd'); key.textContent = 'ESC'; help.append(key, ' bersihkan'); }
   }
-  updateToggle(); updateHelp(); coarse.addEventListener('change', updateHelp);
-  toggle.addEventListener('click', () => {
+  updateToggle(); updateHelp(); listen(coarse, 'change', updateHelp);
+  listen(toggle, 'click', () => {
     enabled = !enabled; updateToggle(); clearEffects(); hideCursor();
     try { localStorage.setItem('gibran-force-fx', enabled ? 'on' : 'off'); } catch { /* Optional storage. */ }
     feedback(enabled ? 'FORCE FX ON / Klik dan tarik area kosong.' : 'FORCE FX OFF / Cursor standar aktif.');
   });
 
-  document.addEventListener('pointerdown', event => {
+  listen(document, 'pointerdown', event => {
     if (!enabled || !event.isPrimary || event.button !== 0 || event.target.closest(blocked) || document.querySelector('dialog[open]')) return;
     const existing = event.target.closest('.force-hologram');
     if (active) releasePointer();
@@ -128,7 +129,7 @@
     active = { id: event.pointerId, startX: event.clientX, startY: event.clientY, card, offsetX, offsetY, moved: false, canDrag: !!existing || (event.pointerType !== 'touch' && !isReadable), tether: null };
     if (existing) { event.preventDefault(); document.documentElement.setPointerCapture(event.pointerId); }
   });
-  document.addEventListener('pointermove', event => {
+  listen(document, 'pointermove', event => {
     if (!enabled) return;
     pointer = { x: event.clientX, y: event.clientY };
     const showCursor = event.pointerType !== 'touch' && !reduced.matches && !event.target.closest(blocked) && !document.querySelector('dialog[open]');
@@ -148,24 +149,27 @@
     [...active.tether.children].forEach(line => { line.setAttribute('x2', event.clientX); line.setAttribute('y2', event.clientY); });
     if (performance.now() - lastSpark > 38) { spark(event.clientX, event.clientY); lastSpark = performance.now(); }
   }, { passive: true });
-  document.addEventListener('pointerup', event => {
+  listen(document, 'pointerup', event => {
     if (!active || active.id !== event.pointerId) return;
     if (!active.card && !active.moved && !window.getSelection()?.toString()) createCard(event.clientX, event.clientY);
     releasePointer();
   });
-  document.addEventListener('pointercancel', releasePointer);
-  document.addEventListener('lostpointercapture', releasePointer);
-  document.addEventListener('pointerout', event => { if (!event.relatedTarget) { hideCursor(); releasePointer(); } });
-  window.addEventListener('blur', () => { hideCursor(); releasePointer(); });
-  window.addEventListener('scroll', () => { clearEffects(); hideCursor(); }, { passive: true });
-  window.addEventListener('resize', () => { clearEffects(); hideCursor(); }, { passive: true });
-  document.addEventListener('visibilitychange', () => { if (document.hidden) { clearEffects(); hideCursor(); } });
-  reduced.addEventListener('change', () => { clearEffects(); hideCursor(); });
-  document.addEventListener('keydown', event => {
+  listen(document, 'pointercancel', releasePointer);
+  listen(document, 'lostpointercapture', releasePointer);
+  listen(document, 'pointerout', event => { if (!event.relatedTarget) { hideCursor(); releasePointer(); } });
+  listen(window, 'blur', () => { hideCursor(); releasePointer(); });
+  listen(window, 'scroll', () => { clearEffects(); hideCursor(); }, { passive: true });
+  listen(window, 'resize', () => { clearEffects(); hideCursor(); }, { passive: true });
+  listen(document, 'visibilitychange', () => { if (document.hidden) { clearEffects(); hideCursor(); } });
+  listen(reduced, 'change', () => { clearEffects(); hideCursor(); });
+  listen(document, 'keydown', event => {
     if (event.key === 'Escape') { clearEffects(); hideCursor(); }
     if (event.key === 'Tab') hideCursor();
   });
   // A native dialog occupies the top layer; drop cosmetic drag state before it opens.
   const projectDialog = document.getElementById('project-dialog');
-  if (projectDialog) new MutationObserver(() => { if (projectDialog.open) { clearEffects(); hideCursor(); } }).observe(projectDialog, { attributes: true, attributeFilter: ['open'] });
-})();
+  const observer = new MutationObserver(() => { if (projectDialog?.open) { clearEffects(); hideCursor(); } });
+  if (projectDialog) observer.observe(projectDialog, { attributes: true, attributeFilter: ['open'] });
+
+return () => { observer.disconnect(); clearEffects(); hideCursor(); scope.dispose(); };
+}
