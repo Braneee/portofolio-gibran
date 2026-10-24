@@ -1,0 +1,40 @@
+/* Pointer-only decoration. Links, text selection, scrolling, and dialogs retain normal behavior. */
+.force-layer{position:fixed;inset:0;z-index:23;pointer-events:none;overflow:hidden;contain:strict;color:var(--accent)}
+.force-reticle{position:absolute;left:0;top:0;width:32px;height:32px;margin:-16px 0 0 -16px;opacity:0;transition:opacity .15s;will-change:transform}
+.force-reticle:before,.force-reticle:after{content:'';position:absolute;inset:0;border:1px solid rgba(var(--accent-rgb),.7);clip-path:polygon(0 0,34% 0,34% 12%,66% 12%,66% 0,100% 0,100% 34%,88% 34%,88% 66%,100% 66%,100% 100%,66% 100%,66% 88%,34% 88%,34% 100%,0 100%,0 66%,12% 66%,12% 34%,0 34%)}
+.force-reticle:after{inset:10px;border-radius:50%;clip-path:none;border-color:rgba(var(--accent-rgb),.4)}
+.force-reticle>span{position:absolute;left:15px;top:15px;width:3px;height:3px;background:var(--accent);box-shadow:0 0 9px var(--accent);border-radius:50%}
+.force-reticle>i{position:absolute;inset:-7px;border:1px dashed rgba(var(--accent-rgb),.24);border-radius:50%;opacity:0;transition:opacity .2s}
+.force-reticle.visible{opacity:1}.force-reticle.holding>i{opacity:1}.force-reticle.holding:before{border-color:var(--accent);filter:drop-shadow(0 0 3px rgba(var(--accent-rgb),.5))}
+.force-cursor-active{cursor:none}.force-cursor-active .force-hologram{cursor:none}
+.force-pulling,.force-pulling *{user-select:none!important;-webkit-user-select:none!important}
+.force-tethers{position:absolute;inset:0;width:100%;height:100%;overflow:visible;stroke:var(--accent);fill:none}
+.force-tether{stroke-width:1.1;stroke-dasharray:6 5;filter:drop-shadow(0 0 4px var(--accent));opacity:.7}
+.force-tether-core{stroke:#fff6ce;stroke-width:.6;opacity:.8}
+.force-tether-group.released{animation:force-tether-out .65s ease-out forwards}
+.force-hologram{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:130px;max-width:min(310px,calc(100vw - 32px));padding:13px 19px 11px;border:1px solid rgba(var(--accent-rgb),.5);border-left:2px solid var(--accent);border-right:2px solid var(--accent);background:linear-gradient(130deg,rgba(10,17,16,.95),rgba(10,15,14,.8)),repeating-linear-gradient(0deg,transparent 0 3px,rgba(var(--accent-rgb),.1) 3px 4px);box-shadow:0 0 28px rgba(var(--accent-rgb),.1),inset 0 0 18px rgba(var(--accent-rgb),.05);transform:translate(-50%,-50%);pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;isolation:isolate;animation:force-materialize .22s ease-out;will-change:left,top}
+.force-hologram:before,.force-hologram:after{content:'';position:absolute;width:10px;height:4px;background:var(--accent)}
+.force-hologram:before{left:-2px;top:-2px}.force-hologram:after{right:-2px;bottom:-2px}
+.force-hologram .holo-id{font:6px var(--mono);letter-spacing:2px;opacity:.6;line-height:1.4}
+.force-hologram strong{font:800 italic clamp(24px,2.6vw,36px)/1 var(--display);letter-spacing:.7px;text-align:center;white-space:nowrap;color:var(--accent);text-shadow:0 0 18px rgba(var(--accent-rgb),.45)}
+.force-hologram .holo-grip{font:6px var(--mono);letter-spacing:1.8px;line-height:1.5;opacity:.6;margin-top:3px}
+.force-hologram:hover,.force-hologram.held{border-color:var(--accent);box-shadow:0 0 38px rgba(var(--accent-rgb),.2),inset 0 0 22px rgba(var(--accent-rgb),.09)}
+.force-hologram.held{cursor:grabbing}.force-hologram.retiring{animation:force-dematerialize .25s ease-in forwards;pointer-events:none}
+.force-ripple{position:absolute;width:66px;height:66px;margin:-33px 0 0 -33px;border:1px solid var(--accent);border-radius:50%;box-shadow:0 0 12px rgba(var(--accent-rgb),.25),inset 0 0 12px rgba(var(--accent-rgb),.12);animation:force-ripple .6s ease-out forwards;pointer-events:none}
+.force-ripple:after{content:'';position:absolute;inset:10px;border:1px dashed var(--accent);border-radius:50%;opacity:.5}
+.force-spark{position:absolute;font:14px var(--mono);color:var(--accent);line-height:1;pointer-events:none;text-shadow:0 0 9px var(--accent);animation:force-spark .48s ease-out forwards}
+.force-controls{position:fixed;right:19px;bottom:18px;z-index:24;display:flex;align-items:center;gap:12px;max-width:calc(100% - 80px)}
+.force-help{color:#a4ac9d;font:7px/1.8 var(--mono);letter-spacing:.25px;background:#10160fe8;border:1px solid #343c2f;padding:7px 11px;backdrop-filter:blur(12px)}
+.force-help kbd{font:6px var(--mono);border:1px solid #555f47;color:var(--accent);padding:1px 3px;margin:0 3px 0 8px}
+.force-toggle{display:flex;align-items:center;gap:8px;font:7px var(--mono);letter-spacing:.7px;color:var(--accent);background:#111710ed;backdrop-filter:blur(12px);padding:9px 11px;border:1px solid #4b513b;white-space:nowrap}
+.force-toggle>span:first-child{font-size:14px;line-height:1}.force-toggle:hover{border-color:var(--accent)}
+.force-controls.disabled .force-help{display:none}.force-controls.disabled .force-toggle{color:#89917f;border-color:#343c2f}
+@keyframes force-materialize{from{opacity:0;transform:translate(-50%,-50%) scale(.75)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes force-dematerialize{to{opacity:0;transform:translate(-50%,-50%) scale(.88)}}
+@keyframes force-ripple{from{opacity:.8;transform:scale(.3) rotate(0)}to{opacity:0;transform:scale(2.3) rotate(35deg)}}
+@keyframes force-spark{from{opacity:.8;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-160%) scale(.1)}}
+@keyframes force-tether-out{to{opacity:0;stroke-dashoffset:30}}
+@media(max-width:900px){.force-controls{bottom:8px;right:9px;gap:7px}.force-help{font-size:6px;padding:6px 8px}.force-toggle{font-size:6px;padding:8px}.force-help kbd{font-size:5px}}
+@media(max-width:680px){.force-controls{right:46px;max-width:calc(100% - 60px)}.force-help{max-width:175px;font-size:6px}.force-help kbd{display:none}.force-toggle{font-size:6px;gap:5px;padding:8px}.force-hologram{padding:10px 13px;min-width:120px;max-width:calc(100vw - 28px)}.force-hologram strong{font-size:26px}.force-hologram .holo-id,.force-hologram .holo-grip{font-size:5px}}
+@media(hover:none),(pointer:coarse){.force-reticle{display:none}.force-cursor-active{cursor:auto}}
+@media(prefers-reduced-motion:reduce){.force-hologram,.force-tether-group{animation:none!important}.force-reticle{display:none}.force-cursor-active{cursor:auto}.force-ripple,.force-spark{display:none}.force-hologram.retiring,.force-tether-group.released{opacity:0}}

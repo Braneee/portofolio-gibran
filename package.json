@@ -1,0 +1,7 @@
+{
+  "name": "gibran-galactic-archive",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": { "dev": "node server.mjs", "check": "node --check dist/app.js && node --check dist/force-cursor.js && node --check dist/vader-hero.js && node --check server.mjs" }
+}
