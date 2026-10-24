@@ -20,7 +20,7 @@ export default function Header() {
   }, []);
   return <header className="site-header"><div className="reading-progress" aria-hidden="true" /><div className="nav-shell">
     <a className="brand" href="#home" aria-label="Gibran Rais - beranda"><span className="brand-monogram" aria-hidden="true">g<span>.</span></span><span>Gibran Iskandar<small>Software & mobile developer</small></span></a>
-    <nav id="navigation" className={open ? 'open' : ''} aria-label="Navigasi utama">{links.map(([id, label], index) => <a key={id} href={'#' + id} className={active === id ? 'active' : ''} aria-current={active === id ? 'location' : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span> {label}</a>)}</nav>
-    <div className="nav-actions"><a className="header-contact" href="#contact">Let’s talk <span>↗</span></a><button ref={toggle} className="menu-toggle" aria-expanded={open} aria-controls="navigation" aria-label={open ? 'Tutup menu' : 'Buka menu'} onClick={() => setOpen(!open)}><span /><span /></button></div>
+    <nav id="navigation" className={open ? 'open' : ''} aria-label="Navigasi utama">{links.map(([id, label]) => <a key={id} href={'#' + id} className={active === id ? 'active' : ''} aria-current={active === id ? 'location' : undefined} onClick={() => setOpen(false)}>{label}</a>)}</nav>
+    <div className="nav-actions"><a className="header-contact" href="#contact">Hubungi saya <span>↗</span></a><button ref={toggle} className="menu-toggle" aria-expanded={open} aria-controls="navigation" aria-label={open ? 'Tutup menu' : 'Buka menu'} onClick={() => setOpen(!open)}><span /><span /></button></div>
   </div></header>;
 }

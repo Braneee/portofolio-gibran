@@ -28,7 +28,6 @@ export function initEditorialMotion() {
     scrollFrame = 0;
     const max = root.scrollHeight - innerHeight;
     root.style.setProperty('--scroll-progress', max > 0 ? Math.min(1, scrollY / max) : 0);
-    root.style.setProperty('--hero-shift', media.matches ? '0px' : Math.min(scrollY, 800) * .12 + 'px');
     document.body.classList.toggle('is-scrolled', scrollY > 35);
   }
   function onScroll() { if (!scrollFrame) scrollFrame = scope.requestAnimationFrame(measureScroll); }
@@ -68,6 +67,6 @@ export function initEditorialMotion() {
   return () => {
     mutations.disconnect(); observer?.disconnect(); scope.dispose(); resetTilt();
     root.classList.remove('motion-ready'); document.body.classList.remove('is-scrolled');
-    root.style.removeProperty('--scroll-progress'); root.style.removeProperty('--hero-shift');
+    root.style.removeProperty('--scroll-progress');
   };
 }
