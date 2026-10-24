@@ -18,6 +18,6 @@ export default function Hero() {
       </button>
       <div className="identity-reveal-note"><span className="reveal-note-line" /><span className="mono" id="vader-hint">ARAHKAN CURSOR KE HELM</span></div>
     </div>
-    <div className="hero-bottom-line mono"><a href="#missions" className="scroll-cue"><span>↓</span> LIHAT PROYEK</a><button className="hyperspace-button" id="hyperspace" title="Animasi hyperspace (H)">Hyperspace <span>↗</span></button></div>
+    <div className="hero-bottom-line mono"><a href="#missions" className="scroll-cue"><span>↓</span> LIHAT PROYEK</a></div>
   </section>;
 }

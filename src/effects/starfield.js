@@ -1,13 +1,16 @@
 import { createScope } from './scope';
-export function initStarfield({ announce, playTone }) {
+export function initStarfield() {
 const scope = createScope();
 const { listen, setTimeout, clearTimeout, requestAnimationFrame, cancelAnimationFrame } = scope;
 const canvas = document.getElementById('starfield');
-const $ = selector => document.querySelector(selector);
 const dialog = document.getElementById('project-dialog');
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 let reducedMotion = motionPreference.matches;
-const ctx = canvas.getContext('2d');
+const ctx = canvas?.getContext('2d');
+if (!ctx) return;
+const JUMP_INTERVAL = 5000;
+const JUMP_DURATION = 1900;
+let nextJumpAt = performance.now() + JUMP_INTERVAL;
 let width = 0, height = 0, stars = [], frameId = 0, lastFrame = 0, jumpStart = 0, jumping = false;
 let pointerX = 0, pointerY = 0;
 function resizeStars() {
@@ -28,7 +31,7 @@ function resizeStars() {
 function drawStars(time) {
   if (!ctx) return;
   ctx.clearRect(0, 0, width, height);
-  const progress = jumping ? Math.min((time - jumpStart) / 1900, 1) : 0;
+  const progress = jumping ? Math.min((time - jumpStart) / JUMP_DURATION, 1) : 0;
   const warp = jumping ? Math.sin(progress * Math.PI) : 0;
   stars.forEach(star => {
     const x = star.x + pointerX * star.radius * 5;
@@ -50,6 +53,12 @@ function drawStars(time) {
 function animate(time) {
   frameId = 0;
   if (document.hidden || reducedMotion) return;
+  // Start-to-start interval. Missed cycles are discarded when the page resumes.
+  if (time >= nextJumpAt) {
+    nextJumpAt = time + JUMP_INTERVAL;
+    if (!dialog?.open) { jumping = true; jumpStart = time; }
+  }
+  if (jumping && time - jumpStart >= JUMP_DURATION) jumping = false;
   if (time - lastFrame >= (jumping ? 16 : 40)) { drawStars(time); lastFrame = time; }
   frameId = requestAnimationFrame(animate);
 }
@@ -61,31 +70,15 @@ let resizeTimer;
 listen(window, 'resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(resizeStars, 100); });
 listen(window, 'pointermove', event => { pointerX = (event.clientX / width - 0.5); pointerY = (event.clientY / height - 0.5); }, { passive: true });
 listen(document, 'visibilitychange', () => {
+  jumping = false; nextJumpAt = performance.now() + JUMP_INTERVAL;
   if (document.hidden) { cancelAnimationFrame(frameId); frameId = 0; } else resumeAnimation();
 });
 listen(motionPreference, 'change', event => {
   reducedMotion = event.matches;
+  jumping = false; nextJumpAt = performance.now() + JUMP_INTERVAL;
   if (reducedMotion) { cancelAnimationFrame(frameId); frameId = 0; drawStars(performance.now()); }
   else resumeAnimation();
 });
-function jumpToHyperspace() {
-  if (jumping) return;
-  if (reducedMotion || !ctx) { announce('HYPERSPACE COMPLETE / Koordinat baru tercapai.'); playTone(220, .3); return; }
-  jumping = true; jumpStart = performance.now();
-  $('#hyperspace').disabled = true;
-  document.body.classList.add('jumping');
-  announce('HYPERDRIVE ENGAGED / Punch it!'); playTone(130, 1.3);
-  setTimeout(() => {
-    jumping = false; document.body.classList.remove('jumping'); $('#hyperspace').disabled = false;
-    announce('WELCOME BACK, COMMANDER.');
-  }, 1900);
-}
-listen($('#hyperspace'), 'click', jumpToHyperspace);
-listen(document, 'keydown', event => {
-  if (event.key.toLowerCase() !== 'h' || event.ctrlKey || event.metaKey || event.altKey || event.repeat || dialog.open) return;
-  if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
-  jumpToHyperspace();
-});
-
-return () => { scope.dispose(); document.body.classList.remove('jumping'); };
+// The lifecycle scope cancels the animation loop and listeners on unmount.
+return () => scope.dispose();
 }

@@ -5,7 +5,7 @@ import { initStarfield } from '../effects/starfield';
 import { initEditorialMotion } from '../effects/editorial-motion';
 export function useGalacticEffects(announce, playTone) {
   useEffect(() => {
-    const dispose = [initStarfield({ announce, playTone }), initForceCursor({ announce, playTone }), initVaderReveal(), initEditorialMotion()];
+    const dispose = [initStarfield(), initForceCursor({ announce, playTone }), initVaderReveal(), initEditorialMotion()];
     return () => dispose.reverse().forEach(cleanup => cleanup?.());
   }, [announce, playTone]);
 }
