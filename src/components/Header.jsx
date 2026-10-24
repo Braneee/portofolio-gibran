@@ -19,7 +19,7 @@ export default function Header() {
     return () => observer.disconnect();
   }, []);
   return <header className="site-header"><div className="nav-shell">
-    <a className="brand" href="#home" aria-label="Gibran Rais — beranda"><img src="/assets/emblem.svg" width="33" height="37" alt="" /><span>GIBRAN<span className="brand-dot">.</span><small>THE GALACTIC ARCHIVE</small></span></a>
+    <a className="brand" href="#home" aria-label="Gibran Rais — beranda"><img src={import.meta.env.BASE_URL + "assets/emblem.svg"} width="33" height="37" alt="" /><span>GIBRAN<span className="brand-dot">.</span><small>THE GALACTIC ARCHIVE</small></span></a>
     <nav id="navigation" className={open ? 'open' : ''} aria-label="Navigasi utama">{links.map(([id, label], index) => <a key={id} href={'#' + id} className={active === id ? 'active' : ''} aria-current={active === id ? 'location' : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span> {label}</a>)}</nav>
     <div className="nav-actions"><button ref={toggle} className="menu-toggle" aria-expanded={open} aria-controls="navigation" aria-label={open ? 'Tutup menu' : 'Buka menu'} onClick={() => setOpen(!open)}><span /><span /></button></div>
   </div></header>;

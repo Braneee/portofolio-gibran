@@ -24,6 +24,29 @@ npm run build
 3. `vercel.json` sudah mengatur Build Command `npm run build` dan Output Directory `dist`.
 4. Deploy. Tidak membutuhkan environment variable atau backend.
 
+## Hosting di GitHub Pages
+
+Alamat setelah deployment berhasil: https://braneee.github.io/portofolio-gibran/
+
+1. Buka repository `Braneee/portofolio-gibran` dan login sebagai pemilik.
+2. Buka **Settings → Pages**.
+3. Pada **Build and deployment → Source**, pilih **GitHub Actions**.
+4. Commit dan push konfigurasi deployment ke branch `main`:
+
+   ```sh
+   git add .github/workflows/deploy.yml vite.config.js index.html src/components/Header.jsx src/components/Hero.jsx src/effects/vader-hero.js README.md
+   git commit -m "ci: configure GitHub Pages deployment"
+   git push origin main
+   ```
+
+5. Buka tab **Actions → Deploy portfolio to GitHub Pages**. Tunggu job `build` dan `deploy` berwarna hijau.
+6. Jika push dilakukan sebelum Pages diaktifkan, buka workflow tersebut, pilih **Run workflow → main → Run workflow**, atau jalankan ulang deployment yang gagal setelah memperbaiki pengaturan Pages.
+7. Buka URL portfolio dari hasil job deployment atau halaman Settings → Pages.
+
+Workflow memasang dependency melalui `npm ci`, membangun website dengan base path nama repository, lalu memublikasikan `dist/`. Setiap push berikutnya ke `main` memperbarui website secara otomatis. Folder `dist/` tidak perlu di-commit.
+
+Build Vercel dan development lokal tetap memakai base `/`; hanya workflow GitHub Pages yang memberikan `VITE_BASE_PATH`.
+
 ## Struktur project
 
 ```text

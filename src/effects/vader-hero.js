@@ -86,7 +86,7 @@ const { listen, setTimeout, clearTimeout, requestAnimationFrame, cancelAnimation
   listen(touch, 'change', () => { reset(); hint.textContent = idleHint(); });
   listen(document.getElementById('gibran-portrait'), 'error', event => {
     const image = event.currentTarget;
-    if (!image.src.endsWith('gibran-portrait-placeholder.svg')) image.src = 'assets/gibran-portrait-placeholder.svg';
+    if (!image.src.endsWith('gibran-portrait-placeholder.svg')) image.src = import.meta.env.BASE_URL + 'assets/gibran-portrait-placeholder.svg';
   });
   center(); write();
 

@@ -4,8 +4,8 @@ export default function Hero() { return (<>
       <div className="poster-topline mono"><span>EPISODE 01 / THE BUILDER</span><span>IN A GALAXY NOT SO FAR AWAY.</span></div>
       <div className="poster-headline"><h1 id="hero-title">A NEW<br />BUILDER<span>.</span></h1><p className="mono">IDEAS BECOME REAL. ONE LINE AT A TIME.</p></div>
       <button className="vader-figure" id="vader-figure" type="button" aria-label="Lihat identitas di balik helm Darth Vader. Arahkan cursor ke helm, atau gunakan Enter untuk menampilkan dan menyembunyikan portrait." aria-pressed="false" aria-describedby="vader-hint">
-        <img className="vader-art" src="assets/darth-vader-front.png" width="480" height="823" alt="Darth Vader berdiri menghadap ke depan dengan helm hitam dan jubah" fetchPriority="high" draggable="false" />
-        <span className="vader-portrait" id="vader-portrait" aria-hidden="true"><img id="gibran-portrait" src="assets/gibran-portrait-placeholder.svg" width="400" height="480" alt="" draggable="false" /><span className="portrait-caption">FOTO GIBRAN · PLACEHOLDER</span></span>
+        <img className="vader-art" src={import.meta.env.BASE_URL + "assets/darth-vader-front.png"} width="480" height="823" alt="Darth Vader berdiri menghadap ke depan dengan helm hitam dan jubah" fetchPriority="high" draggable="false" />
+        <span className="vader-portrait" id="vader-portrait" aria-hidden="true"><img id="gibran-portrait" src={import.meta.env.BASE_URL + "assets/gibran-portrait-placeholder.svg"} width="400" height="480" alt="" draggable="false" /><span className="portrait-caption">FOTO GIBRAN · PLACEHOLDER</span></span>
         <span className="helmet-marker" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       </button>
       <div className="identity-reveal-note"><span className="reveal-note-line" aria-hidden="true"></span><span className="mono" id="vader-hint">ARAHKAN CURSOR KE HELM</span><span className="reveal-note-sub">THERE IS MORE BEHIND THE MASK.</span></div>
