@@ -1,10 +1,11 @@
 /* Pointer-only decoration. Links, text selection, scrolling, and dialogs retain normal behavior. */
 .force-layer{position:fixed;inset:0;z-index:23;pointer-events:none;overflow:hidden;contain:strict;color:var(--accent)}
-.force-reticle{position:absolute;left:0;top:0;width:32px;height:32px;margin:-16px 0 0 -16px;opacity:0;transition:opacity .15s;will-change:transform}
+/* Size the artwork directly: scaling this translated node also scales pointer coordinates. */
+.force-reticle{position:absolute;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;opacity:0;transition:opacity .15s;will-change:transform}
 .force-reticle:before,.force-reticle:after{content:'';position:absolute;inset:0;border:1px solid rgba(var(--accent-rgb),.7);clip-path:polygon(0 0,34% 0,34% 12%,66% 12%,66% 0,100% 0,100% 34%,88% 34%,88% 66%,100% 66%,100% 100%,66% 100%,66% 88%,34% 88%,34% 100%,0 100%,0 66%,12% 66%,12% 34%,0 34%)}
-.force-reticle:after{inset:10px;border-radius:50%;clip-path:none;border-color:rgba(var(--accent-rgb),.4)}
-.force-reticle>span{position:absolute;left:15px;top:15px;width:3px;height:3px;background:var(--accent);box-shadow:0 0 9px var(--accent);border-radius:50%}
-.force-reticle>i{position:absolute;inset:-7px;border:1px dashed rgba(var(--accent-rgb),.24);border-radius:50%;opacity:0;transition:opacity .2s}
+.force-reticle:after{inset:7px;border-radius:50%;clip-path:none;border-color:rgba(var(--accent-rgb),.4)}
+.force-reticle>span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:3px;height:3px;background:var(--accent);box-shadow:0 0 9px var(--accent);border-radius:50%}
+.force-reticle>i{position:absolute;inset:-5px;border:1px dashed rgba(var(--accent-rgb),.24);border-radius:50%;opacity:0;transition:opacity .2s}
 .force-reticle.visible{opacity:1}.force-reticle.holding>i{opacity:1}.force-reticle.holding:before{border-color:var(--accent);filter:drop-shadow(0 0 3px rgba(var(--accent-rgb),.5))}
 .force-cursor-active{cursor:none}.force-cursor-active .force-hologram{cursor:none}
 .force-pulling,.force-pulling *{user-select:none!important;-webkit-user-select:none!important}
